@@ -1,0 +1,8 @@
+../data/random10.txt
+../data/random20.txt
+../data/random50.txt
+../data/unidic/unidic
+../data/words_100.txt
+../data/words_5000.txt
+../data/words_15000.txt
+../data/words_100000.txt
