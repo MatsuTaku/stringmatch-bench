@@ -1,0 +1,31 @@
+name: bench-crawdad
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - bench-crawdad
+
+jobs:
+  bench:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: modify name of crate including our proposal methods
+        run: |
+          cd rust/crawdad_new_constr
+          git apply ../crawdad.patch
+
+      - name: run benchmark
+        run: |
+          cd rust
+          chmod +x *.sh
+          make
+
+      - name: push benchmark results
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'rust/mdtb.md'
