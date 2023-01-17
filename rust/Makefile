@@ -1,5 +1,6 @@
 mdtb.md: mdbase.md exp_setting.txt
 	cat exp_setting.txt > $@ ;\
+	echo "" >> $@ ;\
 	cat $< | python3 calcdiv.py >> $@
 mdbase.md: bench_report_all.txt
 	cat $< | ./make_mdtable.sh > $@
