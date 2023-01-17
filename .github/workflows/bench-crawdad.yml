@@ -30,7 +30,7 @@ jobs:
             wget $url
             gzip -d $(basename $url)
             cd ../rust
-            echo ../data/$(basename $url) >> dataset_list.txt
+            echo ../data/$(basename ${url%.gz}) >> dataset_list.txt
           done
 
       - name: run benchmark
