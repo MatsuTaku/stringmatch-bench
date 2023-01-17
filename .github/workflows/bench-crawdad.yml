@@ -29,8 +29,7 @@ jobs:
           for url in $JAWIKI $ZHWIKI $KOWIKI; do
             wget -q $url
             gzip -d $(basename $url)
-            cd ../rust
-            echo ../data/$(basename ${url%.gz}) >> dataset_list.txt
+            realpath --relative-to ../rust $(basename ${url%.gz}) >> dataset_list.txt
           done
 
       - name: run benchmark
