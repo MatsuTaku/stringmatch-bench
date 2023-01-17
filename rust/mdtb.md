@@ -1,3 +1,7 @@
+model name	: Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz
+cpu MHz		: 2112.006
+cache size	: 6144 KB
+PRETTY_NAME="Ubuntu 22.04.1 LTS"
 |dataset|crawdad/trie|crawdad/mptrie|crawdad_new_constr/trie| crawdad_new_constr/mptrie |
 |---|---|---|---|---|
 |random10.txt|0.027|0.033|0.009 (x0.33)|0.019 (x0.58)|
