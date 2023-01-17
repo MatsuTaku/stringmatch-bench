@@ -18,6 +18,20 @@ jobs:
         run: |
           cd rust/crawdad_new_constr
           git apply ../crawdad.patch
+          
+      - name: download datasets
+        env: 
+          JAWIKI: https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz 
+          ZHWIKI: https://dumps.wikimedia.org/zhwiki/latest/zhwiki-latest-all-titles-in-ns0.gz
+          KOWIKI: https://dumps.wikimedia.org/kowiki/latest/kowiki-latest-all-titles-in-ns0.gz
+        run: |
+          cd data
+          for url in $JAWIKI $ZHWIKI $KOWIKI; do
+            wget $url
+            gzip -d $(basename $url)
+            cd ../rust
+            echo ../data/$(basename $url) >> dataset_list.txt
+          done
 
       - name: run benchmark
         run: |
