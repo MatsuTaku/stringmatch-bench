@@ -27,7 +27,7 @@ jobs:
         run: |
           cd data
           for url in $JAWIKI $ZHWIKI $KOWIKI; do
-            wget $url
+            wget -q $url
             gzip -d $(basename $url)
             cd ../rust
             echo ../data/$(basename ${url%.gz}) >> dataset_list.txt
