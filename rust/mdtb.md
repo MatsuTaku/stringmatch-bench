@@ -1,15 +1,18 @@
-model name	: Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
-cpu MHz		: 2793.437
-cache size	: 49152 KB
+model name	: Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz
+cpu MHz		: 2593.907
+cache size	: 36608 KB
 PRETTY_NAME="Ubuntu 22.04.1 LTS"
 
 |dataset|daachorse/bytewise|daachorse/charwise|daachorse_new_constr/bytewise|daachorse_new_constr/charwise|
 |---|---|---|---|---|
-|random10.txt|0.032|0.066|0.03 (x0.94)|0.02 (x0.3)|
-|random20.txt|0.05|0.136|0.044 (x0.88)|0.034 (x0.25)|
-|random50.txt|0.09|0.366|0.08 (x0.89)|0.068 (x0.19)|
-|unidic|0.716|3.235|0.797 (x1.1)|0.607 (x0.19)|
+|random10.txt|0.036|0.078|0.033 (x0.92)|0.02 (x0.26)|
+|random20.txt|0.061|0.162|0.053 (x0.87)|0.035 (x0.22)|
+|random50.txt|0.111|0.444|0.093 (x0.84)|0.076 (x0.17)|
+|unidic|0.904|3.978|1.02 (x1.1)|0.697 (x0.18)|
 |words_100.txt|0.0|0.0|0.0|0.0|
-|words_5000.txt|0.012|0.009|0.019 (x1.6)|0.009 (x1.0)|
-|words_15000.txt|0.027|0.023|0.038 (x1.4)|0.022 (x0.96)|
-|words_100000.txt|0.372|0.235|0.369 (x0.99)|0.243 (x1.0)|
+|words_5000.txt|0.014|0.01|0.023 (x1.6)|0.01 (x1.0)|
+|words_15000.txt|0.03|0.024|0.044 (x1.5)|0.023 (x0.96)|
+|words_100000.txt|0.478|0.311|0.481 (x1.0)|0.318 (x1.0)|
+|jawiki-latest-all-titles-in-ns0|17.962|7.793|23.626 (x1.3)|5.532 (x0.71)|
+|zhwiki-latest-all-titles-in-ns0|13.873|11.15|19.444 (x1.4)|5.609 (x0.5)|
+|kowiki-latest-all-titles-in-ns0|7.916|3.499|11.41 (x1.4)|2.906 (x0.83)|
