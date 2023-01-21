@@ -10,7 +10,7 @@ function dump {
     done
     echo ""
 }
-echo "|dataset|crawdad/trie|crawdad/mptrie|crawdad_new_constr/trie| crawdad_new_constr/mptrie |
+echo "|dataset|daachorse/bytewise|daachorse/charwise|daachorse_new_constr/bytewise|daachorse_new_constr/charwise|
       |---|---|---|---|---|"
 while read line; do
     case $line in

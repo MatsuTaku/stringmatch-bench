@@ -1,0 +1,11 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 25d4810..fb8d7d5 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -1,5 +1,5 @@
+ [package]
+-name = "daachorse"
++name = "daachorse_new_constr"
+ version = "1.0.0"
+ edition = "2021"
+ rust-version = "1.58"

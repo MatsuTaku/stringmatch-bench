@@ -36,210 +36,108 @@ fn main() {
     });
     keys_stat(&keys);
 
-    {
-        println!("[crawdad/trie]");
-        let start = Instant::now();
-        let trie = crawdad::Trie::from_keys(&keys).unwrap();
-        let duration = start.elapsed();
-        print_heap_bytes(trie.heap_bytes());
-        println!("num_elems: {}", trie.num_elems());
-        println!("num_vacants: {}", trie.num_vacants());
-        println!(
-            "vacant_ratio: {:.3}",
-            trie.num_vacants() as f64 / trie.num_elems() as f64
-        );
-        println!("construction: {:.3} [sec]", duration.as_secs_f64());
-
-        {
-            let mut dummy = 0;
-            let elapsed_sec = measure(TRIALS, || {
-                for query in &queries {
-                    dummy += trie.exact_match(query.chars()).unwrap();
-                }
-            });
-            println!(
-                "exact_match: {:.3} [ns/query]",
-                to_ns(elapsed_sec) / queries.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-
-        if let Some(texts) = texts.as_ref() {
-            // Warmup
-            let mut dummy = 0;
-            let mut haystack = vec![];
-            let elapsed_sec = measure(TRIALS, || {
-                for text in texts {
-                    haystack.clear();
-                    haystack.extend(text.chars());
-                    for i in 0..haystack.len() {
-                        for (v, j) in trie.common_prefix_search(haystack[i..].iter().copied()) {
-                            dummy += j + v as usize;
-                        }
-                    }
-                }
-            });
-            println!(
-                "enumeration: {:.3} [us/text]",
-                to_us(elapsed_sec) / texts.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-    }
-
-    {
-        println!("[crawdad/mptrie]");
-        let start = Instant::now();
-        let trie = crawdad::MpTrie::from_keys(&keys).unwrap();
-        let duration = start.elapsed();
-        print_heap_bytes(trie.heap_bytes());
-        println!("num_elems: {}", trie.num_elems());
-        println!("num_vacants: {}", trie.num_vacants());
-        println!(
-            "vacant_ratio: {:.3}",
-            trie.num_vacants() as f64 / trie.num_elems() as f64
-        );
-        println!("construction: {:.3} [sec]", duration.as_secs_f64());
-
-        {
-            let mut dummy = 0;
-            let elapsed_sec = measure(TRIALS, || {
-                for query in &queries {
-                    dummy += trie.exact_match(query.chars()).unwrap();
-                }
-            });
-            println!(
-                "exact_match: {:.3} [ns/query]",
-                to_ns(elapsed_sec) / queries.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-
-        if let Some(texts) = texts.as_ref() {
-            // Warmup
-            let mut dummy = 0;
-            let mut haystack = vec![];
-            let elapsed_sec = measure(TRIALS, || {
-                for text in texts {
-                    haystack.clear();
-                    haystack.extend(text.chars());
-                    for i in 0..haystack.len() {
-                        for (v, j) in trie.common_prefix_search(haystack[i..].iter().copied()) {
-                            dummy += j + v as usize;
-                        }
-                    }
-                }
-            });
-            println!(
-                "enumeration: {:.3} [us/text]",
-                to_us(elapsed_sec) / texts.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-    }
-
-    {
-        println!("[crawdad_new_constr/trie]");
-        let start = Instant::now();
-        let trie = crawdad_new_constr::Trie::from_keys(&keys).unwrap();
-        let duration = start.elapsed();
-        print_heap_bytes(trie.heap_bytes());
-        println!("num_elems: {}", trie.num_elems());
-        println!("num_vacants: {}", trie.num_vacants());
-        println!(
-            "vacant_ratio: {:.3}",
-            trie.num_vacants() as f64 / trie.num_elems() as f64
-        );
-        println!("construction: {:.3} [sec]", duration.as_secs_f64());
-
-        {
-            let mut dummy = 0;
-            let elapsed_sec = measure(TRIALS, || {
-                for query in &queries {
-                    dummy += trie.exact_match(query.chars()).unwrap();
-                }
-            });
-            println!(
-                "exact_match: {:.3} [ns/query]",
-                to_ns(elapsed_sec) / queries.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-
-        if let Some(texts) = texts.as_ref() {
-            // Warmup
-            let mut dummy = 0;
-            let mut haystack = vec![];
-            let elapsed_sec = measure(TRIALS, || {
-                for text in texts {
-                    haystack.clear();
-                    haystack.extend(text.chars());
-                    for i in 0..haystack.len() {
-                        for (v, j) in trie.common_prefix_search(haystack[i..].iter().copied()) {
-                            dummy += j + v as usize;
-                        }
-                    }
-                }
-            });
-            println!(
-                "enumeration: {:.3} [us/text]",
-                to_us(elapsed_sec) / texts.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-    }
-
-    {
-        println!("[crawdad_new_constr/mptrie]");
-        let start = Instant::now();
-        let trie = crawdad_new_constr::MpTrie::from_keys(&keys).unwrap();
-        let duration = start.elapsed();
-        print_heap_bytes(trie.heap_bytes());
-        println!("num_elems: {}", trie.num_elems());
-        println!("num_vacants: {}", trie.num_vacants());
-        println!(
-            "vacant_ratio: {:.3}",
-            trie.num_vacants() as f64 / trie.num_elems() as f64
-        );
-        println!("construction: {:.3} [sec]", duration.as_secs_f64());
-
-        {
-            let mut dummy = 0;
-            let elapsed_sec = measure(TRIALS, || {
-                for query in &queries {
-                    dummy += trie.exact_match(query.chars()).unwrap();
-                }
-            });
-            println!(
-                "exact_match: {:.3} [ns/query]",
-                to_ns(elapsed_sec) / queries.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-
-        if let Some(texts) = texts.as_ref() {
-            // Warmup
-            let mut dummy = 0;
-            let mut haystack = vec![];
-            let elapsed_sec = measure(TRIALS, || {
-                for text in texts {
-                    haystack.clear();
-                    haystack.extend(text.chars());
-                    for i in 0..haystack.len() {
-                        for (v, j) in trie.common_prefix_search(haystack[i..].iter().copied()) {
-                            dummy += j + v as usize;
-                        }
-                    }
-                }
-            });
-            println!(
-                "enumeration: {:.3} [us/text]",
-                to_us(elapsed_sec) / texts.len() as f64
-            );
-            println!("dummy: {}", dummy);
-        }
-    }
-
+    // {
+    //     println!("[crawdad/trie]");
+    //     let start = Instant::now();
+    //     let trie = crawdad::Trie::from_keys(&keys).unwrap();
+    //     let duration = start.elapsed();
+    //     print_heap_bytes(trie.heap_bytes());
+    //     println!("num_elems: {}", trie.num_elems());
+    //     println!("num_vacants: {}", trie.num_vacants());
+    //     println!(
+    //         "vacant_ratio: {:.3}",
+    //         trie.num_vacants() as f64 / trie.num_elems() as f64
+    //     );
+    //     println!("construction: {:.3} [sec]", duration.as_secs_f64());
+    //
+    //     {
+    //         let mut dummy = 0;
+    //         let elapsed_sec = measure(TRIALS, || {
+    //             for query in &queries {
+    //                 dummy += trie.exact_match(query.chars()).unwrap();
+    //             }
+    //         });
+    //         println!(
+    //             "exact_match: {:.3} [ns/query]",
+    //             to_ns(elapsed_sec) / queries.len() as f64
+    //         );
+    //         println!("dummy: {}", dummy);
+    //     }
+    //
+    //     if let Some(texts) = texts.as_ref() {
+    //         // Warmup
+    //         let mut dummy = 0;
+    //         let mut haystack = vec![];
+    //         let elapsed_sec = measure(TRIALS, || {
+    //             for text in texts {
+    //                 haystack.clear();
+    //                 haystack.extend(text.chars());
+    //                 for i in 0..haystack.len() {
+    //                     for (v, j) in trie.common_prefix_search(haystack[i..].iter().copied()) {
+    //                         dummy += j + v as usize;
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //         println!(
+    //             "enumeration: {:.3} [us/text]",
+    //             to_us(elapsed_sec) / texts.len() as f64
+    //         );
+    //         println!("dummy: {}", dummy);
+    //     }
+    // }
+    //
+    // {
+    //     println!("[crawdad/mptrie]");
+    //     let start = Instant::now();
+    //     let trie = crawdad::MpTrie::from_keys(&keys).unwrap();
+    //     let duration = start.elapsed();
+    //     print_heap_bytes(trie.heap_bytes());
+    //     println!("num_elems: {}", trie.num_elems());
+    //     println!("num_vacants: {}", trie.num_vacants());
+    //     println!(
+    //         "vacant_ratio: {:.3}",
+    //         trie.num_vacants() as f64 / trie.num_elems() as f64
+    //     );
+    //     println!("construction: {:.3} [sec]", duration.as_secs_f64());
+    //
+    //     {
+    //         let mut dummy = 0;
+    //         let elapsed_sec = measure(TRIALS, || {
+    //             for query in &queries {
+    //                 dummy += trie.exact_match(query.chars()).unwrap();
+    //             }
+    //         });
+    //         println!(
+    //             "exact_match: {:.3} [ns/query]",
+    //             to_ns(elapsed_sec) / queries.len() as f64
+    //         );
+    //         println!("dummy: {}", dummy);
+    //     }
+    //
+    //     if let Some(texts) = texts.as_ref() {
+    //         // Warmup
+    //         let mut dummy = 0;
+    //         let mut haystack = vec![];
+    //         let elapsed_sec = measure(TRIALS, || {
+    //             for text in texts {
+    //                 haystack.clear();
+    //                 haystack.extend(text.chars());
+    //                 for i in 0..haystack.len() {
+    //                     for (v, j) in trie.common_prefix_search(haystack[i..].iter().copied()) {
+    //                         dummy += j + v as usize;
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //         println!(
+    //             "enumeration: {:.3} [us/text]",
+    //             to_us(elapsed_sec) / texts.len() as f64
+    //         );
+    //         println!("dummy: {}", dummy);
+    //     }
+    // }
+    //
     // {
     //     println!("[std/BTreeMap]");
     //     let start = Instant::now();
@@ -414,58 +312,110 @@ fn main() {
     //         println!("dummy: {}", dummy);
     //     }
     // }
-    //
-    // {
-    //     println!("[daachorse/bytewise]");
-    //     let start = Instant::now();
-    //     let pma = daachorse::DoubleArrayAhoCorasick::<u32>::new(&keys).unwrap();
-    //     let duration = start.elapsed();
-    //     print_heap_bytes(pma.heap_bytes());
-    //     println!("construction: {:.3} [sec]", duration.as_secs_f64());
-    //
-    //     if let Some(texts) = texts.as_ref() {
-    //         // Warmup
-    //         let mut dummy = 0;
-    //         let elapsed_sec = measure(TRIALS, || {
-    //             for text in texts {
-    //                 for m in pma.find_overlapping_iter(text) {
-    //                     dummy += m.end() + m.value() as usize;
-    //                 }
-    //             }
-    //         });
-    //         println!(
-    //             "enumeration: {:.3} [us/text]",
-    //             to_us(elapsed_sec) / texts.len() as f64
-    //         );
-    //         println!("dummy: {}", dummy);
-    //     }
-    // }
-    //
-    // {
-    //     println!("[daachorse/charwise]");
-    //     let start = Instant::now();
-    //     let pma = daachorse::CharwiseDoubleArrayAhoCorasick::<u32>::new(&keys).unwrap();
-    //     let duration = start.elapsed();
-    //     print_heap_bytes(pma.heap_bytes());
-    //     println!("construction: {:.3} [sec]", duration.as_secs_f64());
-    //
-    //     if let Some(texts) = texts.as_ref() {
-    //         // Warmup
-    //         let mut dummy = 0;
-    //         let elapsed_sec = measure(TRIALS, || {
-    //             for text in texts {
-    //                 for m in pma.find_overlapping_iter(text) {
-    //                     dummy += m.end() + m.value() as usize;
-    //                 }
-    //             }
-    //         });
-    //         println!(
-    //             "enumeration: {:.3} [us/text]",
-    //             to_us(elapsed_sec) / texts.len() as f64
-    //         );
-    //         println!("dummy: {}", dummy);
-    //     }
-    // }
+
+    {
+        println!("[daachorse/bytewise]");
+        let start = Instant::now();
+        let pma = daachorse::DoubleArrayAhoCorasick::<u32>::new(&keys).unwrap();
+        let duration = start.elapsed();
+        print_heap_bytes(pma.heap_bytes());
+        println!("construction: {:.3} [sec]", duration.as_secs_f64());
+
+        if let Some(texts) = texts.as_ref() {
+            // Warmup
+            let mut dummy = 0;
+            let elapsed_sec = measure(TRIALS, || {
+                for text in texts {
+                    for m in pma.find_overlapping_iter(text) {
+                        dummy += m.end() + m.value() as usize;
+                    }
+                }
+            });
+            println!(
+                "enumeration: {:.3} [us/text]",
+                to_us(elapsed_sec) / texts.len() as f64
+            );
+            println!("dummy: {}", dummy);
+        }
+    }
+
+    {
+        println!("[daachorse/charwise]");
+        let start = Instant::now();
+        let pma = daachorse::CharwiseDoubleArrayAhoCorasick::<u32>::new(&keys).unwrap();
+        let duration = start.elapsed();
+        print_heap_bytes(pma.heap_bytes());
+        println!("construction: {:.3} [sec]", duration.as_secs_f64());
+
+        if let Some(texts) = texts.as_ref() {
+            // Warmup
+            let mut dummy = 0;
+            let elapsed_sec = measure(TRIALS, || {
+                for text in texts {
+                    for m in pma.find_overlapping_iter(text) {
+                        dummy += m.end() + m.value() as usize;
+                    }
+                }
+            });
+            println!(
+                "enumeration: {:.3} [us/text]",
+                to_us(elapsed_sec) / texts.len() as f64
+            );
+            println!("dummy: {}", dummy);
+        }
+    }
+
+    {
+        println!("[daachorse_new_constr/bytewise]");
+        let start = Instant::now();
+        let pma = daachorse_new_constr::DoubleArrayAhoCorasick::<u32>::new(&keys).unwrap();
+        let duration = start.elapsed();
+        print_heap_bytes(pma.heap_bytes());
+        println!("construction: {:.3} [sec]", duration.as_secs_f64());
+
+        if let Some(texts) = texts.as_ref() {
+            // Warmup
+            let mut dummy = 0;
+            let elapsed_sec = measure(TRIALS, || {
+                for text in texts {
+                    for m in pma.find_overlapping_iter(text) {
+                        dummy += m.end() + m.value() as usize;
+                    }
+                }
+            });
+            println!(
+                "enumeration: {:.3} [us/text]",
+                to_us(elapsed_sec) / texts.len() as f64
+            );
+            println!("dummy: {}", dummy);
+        }
+    }
+
+    {
+        println!("[daachorse_new_constr/charwise]");
+        let start = Instant::now();
+        let pma = daachorse_new_constr::CharwiseDoubleArrayAhoCorasick::<u32>::new(&keys).unwrap();
+        let duration = start.elapsed();
+        print_heap_bytes(pma.heap_bytes());
+        println!("construction: {:.3} [sec]", duration.as_secs_f64());
+
+        if let Some(texts) = texts.as_ref() {
+            // Warmup
+            let mut dummy = 0;
+            let elapsed_sec = measure(TRIALS, || {
+                for text in texts {
+                    for m in pma.find_overlapping_iter(text) {
+                        dummy += m.end() + m.value() as usize;
+                    }
+                }
+            });
+            println!(
+                "enumeration: {:.3} [us/text]",
+                to_us(elapsed_sec) / texts.len() as f64
+            );
+            println!("dummy: {}", dummy);
+        }
+    }
 }
 
 fn print_heap_bytes(bytes: usize) {

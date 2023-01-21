@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 aho-corasick = "=0.7.19"  # Unlicense or MIT
 crawdad = "=0.4.0"  # MIT or Apache-2.0
-crawdad_new_constr = { path="crawdad_new_constr" }
 daachorse = "=1.0.0"  # MIT or Apache-2.0
+daachorse_new_constr = { path="daachorse_new_constr" }  # MIT or Apache-2.0
 fst = "=0.4.7"  # Unlicense or MIT
 hashbrown = "=0.12.3"  # MIT or Apache-2.0
 yada = "=0.5.0"  # MIT or Apache-2.0

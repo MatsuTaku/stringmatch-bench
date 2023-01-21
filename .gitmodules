@@ -1,4 +1,4 @@
-[submodule "rust/crawdad_new_constr"]
-	path = rust/crawdad_new_constr
-	url = https://github.com/matsutaku/crawdad.git
-	branch = bitparallel-find_base
+[submodule "rust/daachorse_new_constr"]
+	path = rust/daachorse_new_constr
+	url = https://github.com/matsutaku/daachorse.git
+  	branch = bitparallel-find_base
