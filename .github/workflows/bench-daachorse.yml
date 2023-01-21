@@ -1,10 +1,10 @@
-name: bench-crawdad
+name: bench-daachorse
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - bench-crawdad
+      - bench-daachorse
 
 jobs:
   bench:
@@ -16,8 +16,8 @@ jobs:
 
       - name: modify name of crate including our proposal methods
         run: |
-          cd rust/crawdad_new_constr
-          git apply ../crawdad.patch
+          cd rust/daachorse_new_constr
+          sed -e 's/name = "daachorse"/name = "daachorse_new_constr"/' -i Cargo.toml
 
       - name: run benchmark
         run: |
